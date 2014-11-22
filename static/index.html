@@ -100,9 +100,9 @@
         
         
         // Do something with our quaternion, matrix, euler objects...
-        //document.getElementById('eulerTest').innerHTML = euler.alpha;
-        //document.getElementById('matrixTest').innerHTML = euler.beta;
-        //document.getElementById('quaterionTest').innerHTML = euler.gamma;
+        document.getElementById('eulerTest').innerHTML = euler.alpha;
+        document.getElementById('matrixTest').innerHTML = euler.beta;
+        document.getElementById('quaterionTest').innerHTML = euler.gamma;
         plotMaps(-euler.alpha, euler.beta);
         //console.debug(euler);
         //console.debug(matrix);
@@ -117,10 +117,10 @@
   </script>
   </head>
   <body>
-    <div id="map-canvas" style="position: absolut; top: 460px; width: 600px; height: 450px"></div>
+    <div id="map-canvas" style="position: absolute; top: 460px; width: 600px; height: 450px"></div>
     <div id="pano" style="position:absolute; top: 0px; width: 600px; height: 450px;"></div>
-    Euler.alpha <div id="eulerTest"> Test </div><br>
-    Euler.beta <div id="matrixTest"> </div><br>
-    Euler.gamma <div id="quaterionTest"> </div><br>
+    Euler.alpha <div id="eulerTest" style="position:absolute; top:1100px;"> Test </div><br>
+    Euler.beta <div id="matrixTest" style="position:absolute; top:1110px;"> </div><br>
+    Euler.gamma <div id="quaterionTest" style="position:absolute; top:1120px;"> </div><br>
   </body>
 </html>
