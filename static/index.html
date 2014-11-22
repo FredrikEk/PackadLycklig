@@ -79,8 +79,10 @@
         var euler = deviceOrientation.getScreenAdjustedEuler();
 
         // Do something with our quaternion, matrix, euler objects...
-        document.getElementById('eulerTest').innerHTML = euler.alpha / 10;
-        plotMaps(euler.alpha / 10);
+        document.getElementById('eulerTest').innerHTML = euler.alpha;
+        document.getElementById('matrixTest').innerHTML = euler.beta;
+        document.getElementById('quaterionTest').innerHTML = euler.gamma;
+        plotMaps(euler.beta);
         //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
@@ -95,9 +97,9 @@
   </head>
   <body>
     <div id="map-canvas" style="width: 400px; height: 300px"></div>
-    <div id="pano" style="position:absolute; left:410px; top: 8px; width: 400px; height: 300px;"></div>
-    <div id="eulerTest"> Test </div>
-    <div id="matrixTest"> </div>
-    <div id="quaterionTest"> </div>
+    <div id="pano" style="position:absolute; left:410px; top: 8px; width: 600px; height: 450px;"></div>
+    Euler.alpha <div id="eulerTest"> Test </div><br>
+    Euler.beta <div id="matrixTest"> </div><br>
+    Euler.gamma <div id="quaterionTest"> </div><br>
   </body>
 </html>
