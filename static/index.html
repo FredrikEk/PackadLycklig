@@ -87,15 +87,16 @@
         //var euler = deviceOrientation.getScreenAdjustedEuler();
         //euler.rotateY(-euler.gamma* (Math.PI / 180));
         
-        var euler = new FULLTILT.Euler();
-        euler.getScreenAdjustedEuler();
+        var euler = deviceOrientation.getScreenAdjustedEuler();
         euler.rotateY(-euler.gamma* (Math.PI / 180));
         
-        var quat = deviceOrientation.setFromEuler(euler);
+        
+        var quat = new FULLTILT.Quaternion();
+        quat.setFromEuler(euler);
     
         quat.multiply( worldQuat );
         
-        euler.setFromQuaternion(quat)
+        euler.setFromQuaternion(quat);
         
         
         // Do something with our quaternion, matrix, euler objects...
