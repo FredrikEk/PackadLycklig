@@ -93,6 +93,7 @@
         
         var euler = new FULLTILT.Euler();
         euler.setFromQuaternion(orientationQuat);
+        euler.rotateY(-euler.gamma* (Math.PI / 180));
         
         // Do something with our quaternion, matrix, euler objects...
         document.getElementById('eulerTest').innerHTML = euler.alpha;
