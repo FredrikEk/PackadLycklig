@@ -68,7 +68,8 @@
         var euler = deviceOrientation.getScreenAdjustedEuler();
 
         // Do something with our quaternion, matrix, euler objects...
-        //console.debug(quaternion);
+        document.getElementById('eulerTest').innerHTML = euler.alpha;
+        //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
 
@@ -83,5 +84,8 @@
   <body>
     <div id="map-canvas" style="width: 400px; height: 300px"></div>
     <div id="pano" style="position:absolute; left:410px; top: 8px; width: 400px; height: 300px;"></div>
+    <div id="eulerTest"> Test </div>
+    <div id="matrixTest"> </div>
+    <div id="quaterionTest"> </div>
   </body>
 </html>
