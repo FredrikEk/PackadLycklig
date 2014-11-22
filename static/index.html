@@ -66,18 +66,34 @@
         // initManualControls();
       });
 
+    var orientationQuat = new FULLTILT.Quaternion();
+    
+    var worldQuat = new FULLTILT.Quaternion( - Math.sqrt( 0.5 ), 0, 0, Math.sqrt( 0.5 ) );
+    
+    
+      
     (function draw() {
 
+        
+        
       // If we have a valid FULLTILT.DeviceOrientation object then use it
       if (deviceOrientation) {
-
+        
+        
+        var quat = deviceOrientation.getScreenAdjustedQuaternion();
+        orientationQuat.set( quat.x, quat.y, quat.z, quat.w );
+        orientationQuat.multiply( worldQuat );
+        
         // Obtain the *screen-adjusted* normalized device rotation
         // as Quaternion, Rotation Matrix and Euler Angles objects
         // from our FULLTILT.DeviceOrientation object
-        var quaternion = deviceOrientation.getScreenAdjustedQuaternion();
-        var matrix = deviceOrientation.getScreenAdjustedMatrix();
-        var euler = deviceOrientation.getScreenAdjustedEuler();
-
+        //var matrix = deviceOrientation.getScreenAdjustedMatrix();
+        //var euler = deviceOrientation.getScreenAdjustedEuler();
+        //euler.rotateY(-euler.gamma* (Math.PI / 180));
+        
+        var euler = new FULLTILT.Euler();
+        euler.setFromQuaternion(orientationQuat);
+        
         // Do something with our quaternion, matrix, euler objects...
         document.getElementById('eulerTest').innerHTML = euler.alpha;
         document.getElementById('matrixTest').innerHTML = euler.beta;
