@@ -83,7 +83,10 @@
         var quat = deviceOrientation.getScreenAdjustedQuaternion();
         orientationQuat.set( quat.x, quat.y, quat.z, quat.w );
         orientationQuat.multiply( worldQuat );
-        
+        quat.x = quat.x + worldQuat.x;
+        quat.y = quat.y + worldQuat.y;
+        quat.z = quat.z + worldQuat.z;
+        quat.w = quat.w + worldQuat.w;
         // Obtain the *screen-adjusted* normalized device rotation
         // as Quaternion, Rotation Matrix and Euler Angles objects
         // from our FULLTILT.DeviceOrientation object
