@@ -79,8 +79,8 @@
         var euler = deviceOrientation.getScreenAdjustedEuler();
 
         // Do something with our quaternion, matrix, euler objects...
-        document.getElementById('eulerTest').innerHTML = euler.alpha;
-        plotMaps(euler.alpha);
+        document.getElementById('eulerTest').innerHTML = euler.alpha / 10;
+        plotMaps(euler.alpha / 10);
         //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
