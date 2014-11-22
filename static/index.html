@@ -34,11 +34,30 @@
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
-
+    
+    function plotMaps(headingTest) {
+      var fenway = new google.maps.LatLng(42.345573, -71.098326);
+      var mapOptions = {
+        center: fenway,
+        zoom: 14 
+      };
+      var map = new google.maps.Map(
+          document.getElementById('map-canvas'), mapOptions);
+      var panoramaOptions = {
+        position: fenway,
+        pov: {
+          heading: headingTest,
+          pitch: 30
+        }
+      };
+      var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+      map.setStreetView(panorama);
+    }
+    
     </script>
     <script>
     // Create a new FULLTILT Promise for e.g. *compass*-based deviceorientation data
-    var promise = new FULLTILT.getDeviceOrientation({ 'type': 'world' });
+    var promise = new FULLTILT.getDeviceOrientation({ 'type': 'game' });
 
     // FULLTILT.DeviceOrientation instance placeholder
     var deviceOrientation;
@@ -69,6 +88,7 @@
 
         // Do something with our quaternion, matrix, euler objects...
         document.getElementById('eulerTest').innerHTML = euler.alpha;
+        plotMap(euler.alpha);
         //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
