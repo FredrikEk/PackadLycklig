@@ -88,22 +88,22 @@
         //euler.rotateY(-euler.gamma* (Math.PI / 180));
         
         var euler = deviceOrientation.getScreenAdjustedEuler();
-        //euler.rotateY(-euler.gamma* (Math.PI / 180));
+        euler.rotateY(-euler.gamma* (Math.PI / 180));
         
         
-        //var quat = new FULLTILT.Quaternion();
-        //quat.setFromEuler(euler);
+        var quat = new FULLTILT.Quaternion();
+        quat.setFromEuler(euler);
     
-        //quat.multiply( worldQuat );
+        quat.multiply( worldQuat );
         
-        //euler.setFromQuaternion(quat);
+        euler.setFromQuaternion(quat);
         
         
         // Do something with our quaternion, matrix, euler objects...
         //document.getElementById('eulerTest').innerHTML = euler.alpha;
         //document.getElementById('matrixTest').innerHTML = euler.beta;
         //document.getElementById('quaterionTest').innerHTML = euler.gamma;
-        plotMaps(euler.alpha, euler.beta-90);
+        plotMaps(-euler.alpha, euler.beta);
         //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
