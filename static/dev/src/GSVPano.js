@@ -77,7 +77,19 @@ GSVPANO.PanoLoader = function (parameters) {
                             callback( null, _canvas );
                         }	
 					});
-					img.crossOrigin = '';
+          img.addEventListener('error', function() {
+                        _ctx.drawImage( new Image(), x*512, y*512 );
+                        _count++;
+                        var p = Math.round(_count * 100 / _total);
+                        self.onProgress(p);
+                        if (_count === _total) {
+                            self.canvas = _canvas;
+                            self.onPanoramaLoad();
+                            callback( null, _canvas );
+                        }	
+          });
+          img.crossOrigin = 'anonymous';
+          
 					img.src = url;
 				})(x, y);
 			}

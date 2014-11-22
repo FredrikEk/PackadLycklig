@@ -5,6 +5,8 @@
 		<title>WebGL Google Street Viewer</title>
 		<link rel="stylesheet" href="buttons.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<style type="text/css">
+    <script src="js/fulltilt.js"> </script>
+    <script src="js/DeviceOrientationController.js"> </script>
 	*{ 
 		margin: 0; 
 		padding: 0; 
@@ -269,8 +271,22 @@
 			showError( message );
 		}
 		
+    var controls;
+    
 		function initialize() {
-			
+			 var promise = new FULLTILT.getDeviceOrientation({ 'type': 'world' });
+
+      promise
+      .then(function(controller) {
+        // Store the returned FULLTILT.DeviceOrientation object
+        deviceOrientation = controller;
+      })
+      .catch(function(message) {
+        console.error(message);
+
+        // Optionally set up fallback controls...
+        // initManualControls();
+      });
 			var locations = [
 				{ lat: 51.50700703827454, lng: -0.12791916931155356 },
 				{ lat: 32.6144404, lng: -108.9852017 },
@@ -559,6 +575,14 @@
 		
 		function render() {
 
+      var euler = controls.getScreenAdjustedEuler();
+      orientationQuat.setFromEuler( new THREE.Euler(
+        THREE.Math.degToRad( euler.beta  ),
+        THREE.Math.degToRad( euler.gamma ),
+        THREE.Math.degToRad( euler.alpha ),
+        'ZXY'
+      ) );
+      
 			var cd = new Date();
 			ctime = cd.getTime();
 			
@@ -577,14 +601,54 @@
 			camera.target.x = 500 * Math.sin( phi ) * Math.cos( theta );
 			camera.target.y = 500 * Math.cos( phi );
 			camera.target.z = 500 * Math.sin( phi ) * Math.sin( theta );
-			camera.lookAt( camera.target );
+//			camera.lookAt( camera.target );
 			
-			renderer.render( scene, camera );
-			
+//			renderer.render( scene, camera );
+        camera.quaternion.multiplyQuaternions( worldQuat, orientationQuat );
+				// Render scene
+				renderer.render( scene, camera );
 			time = ctime;
 
 		}
 		
+    (			function draw() {
+				// Use the currently selected rotation representation to set our camera position
+				switch( currentControlType ) {
+					case 0: // Use Quaternion
+						var quat = controls.getScreenAdjustedQuaternion();
+						orientationQuat.set( quat.x, quat.y, quat.z, quat.w );
+						debugQuat(quat);
+						break;
+					case 1: // Use Rotation Matrix
+						var matrix = controls.getScreenAdjustedMatrix();
+						orientationQuat.setFromRotationMatrix( new THREE.Matrix4(
+							matrix.elements[0], matrix.elements[1], matrix.elements[2], 0,
+							matrix.elements[3], matrix.elements[4], matrix.elements[5], 0,
+							matrix.elements[6], matrix.elements[7], matrix.elements[8], 0,
+							0                 , 0                 , 0                 , 1
+						) );
+						debugRotMat(matrix);
+						break;
+					case 2: // Use Euler
+						var euler = controls.getScreenAdjustedEuler();
+						orientationQuat.setFromEuler( new THREE.Euler(
+							THREE.Math.degToRad( euler.beta  ),
+							THREE.Math.degToRad( euler.gamma ),
+							THREE.Math.degToRad( euler.alpha ),
+							'ZXY'
+						) );
+						debugEuler(euler);
+						break;
+				};
+				// IMPORTANT! set deviceorientation camera to three.js world frame
+				// (i.e. make camera look out the back of the screen by rotating the camera x-axis by -PI/2)
+				camera.quaternion.multiplyQuaternions( worldQuat, orientationQuat );
+				// Render scene
+				renderer.render( scene, camera );
+				// Re-draw at next browser paint
+				requestAnimationFrame( draw );
+			})
+    
 		</script>
 				
 		<script type="text/javascript">
