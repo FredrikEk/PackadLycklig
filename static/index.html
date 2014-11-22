@@ -37,11 +37,11 @@
 
     google.maps.event.addDomListener(window, 'load', initialize);
     
-    function plotMaps(headingTest) {
+    function plotMaps(headingXaxis, headingYaxis) {
       var panorama = map.getStreetView();
       panorama.setPov({
-        heading: headingTest,
-        pitch: 10,
+        heading: headingXaxis,
+        pitch: headingYaxis,
         zoom: 1
       });
     }
@@ -82,7 +82,7 @@
         document.getElementById('eulerTest').innerHTML = euler.alpha;
         document.getElementById('matrixTest').innerHTML = euler.beta;
         document.getElementById('quaterionTest').innerHTML = euler.gamma;
-        plotMaps(euler.beta);
+        plotMaps(euler.alpha, euler.beta);
         //console.debug(euler);
         //console.debug(matrix);
         //console.debug(euler);
